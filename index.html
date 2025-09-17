@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Crafts | Handcrafted Luxury Scents</title>
+    <meta name="description" content="Discover handcrafted luxury candles, shower gels, soaps, and more from Magical Crafts. Small-batch, artisanal products for the discerning customer.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://magicalcrafts.com/">
+    <meta property="og:title" content="Magical Crafts | Handcrafted Luxury Scents">
+    <meta property="og:description" content="Discover handcrafted luxury candles, shower gels, soaps, and more from Magical Crafts.">
+    <meta property="og:image" content="http://static.photos/luxury/1200x630/1">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://magicalcrafts.com/">
+    <meta property="twitter:title" content="Magical Crafts | Handcrafted Luxury Scents">
+    <meta property="twitter:description" content="Discover handcrafted luxury candles, shower gels, soaps, and more from Magical Crafts.">
+    <meta property="twitter:image" content="http://static.photos/luxury/1200x630/1">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose-gold': '#B76E79',
+                        'blush-pink': '#F7D7D7',
+                        'deep-brown': '#5A3B3B',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .cart-panel {
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #B76E79;
+        }
+    </style>
+</head>
+<body class="bg-white text-deep-brown">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-rose-gold font-playfair">Magical Crafts</a>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="hover:text-rose-gold transition">Home</a>
+                <a href="#products" class="hover:text-rose-gold transition">Shop</a>
+                <a href="#about" class="hover:text-rose-gold transition">About</a>
+                <a href="#reviews" class="hover:text-rose-gold transition">Reviews</a>
+                <a href="#contact" class="hover:text-rose-gold transition">Contact</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button id="cart-button" class="relative">
+                    <i data-feather="shopping-cart" class="text-deep-brown hover:text-rose-gold"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-rose-gold text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+                
+                <button id="mobile-menu-button" class="md:hidden">
+                    <i data-feather="menu" class="text-deep-brown"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
+            <a href="#" class="block py-2 hover:text-rose-gold">Home</a>
+            <a href="#products" class="block py-2 hover:text-rose-gold">Shop</a>
+            <a href="#about" class="block py-2 hover:text-rose-gold">About</a>
+            <a href="#reviews" class="block py-2 hover:text-rose-gold">Reviews</a>
+            <a href="#contact" class="block py-2 hover:text-rose-gold">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center bg-blush-pink overflow-hidden">
+        <img src="https://github.com/greymcai/magicalcrafts/blob/main/039dd007-7cca-4a37-b9f6-bae95f4b464b.jpg?raw=true" alt="Luxury scented candles and bath products" class="absolute inset-0 w-full h-full object-cover opacity-30">
+        
+        <div class="container mx-auto px-4 z-10 text-center" data-aos="fade-up">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-deep-brown font-playfair">Handcrafted Luxury Scents for Every Mood</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-3xl mx-auto">
+                Discover handcrafted custom candles, luxurious shower gels, gentle face soaps, refreshing room mists, and nourishing body lotions — all available in a variety of fragrances and colors tailored just for you.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#products" class="bg-rose-gold hover:bg-deep-brown text-white px-8 py-3 rounded-full transition duration-300 font-medium">Shop Now</a>
+                <a href="#contact" class="border-2 border-rose-gold text-rose-gold hover:bg-rose-gold hover:text-white px-8 py-3 rounded-full transition duration-300 font-medium">Customize Your Scent</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 font-playfair" data-aos="fade-up">Our Signature Collection</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://github.com/greymcai/magicalcrafts/blob/main/36c10aa7-5b2c-4535-9ce1-43d4f32d3947.jpg?raw=true" alt="Massaging Wax Oil Candle" class="w-full h-64 object-cover" loading="lazy">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 font-playfair">Massaging Wax Oil Candle</h3>
+                        <p class="text-gray-600 mb-4">A luxurious candle that melts into warm massage oil with soothing properties.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-rose-gold font-bold">R 250</span>
+                            <button class="add-to-cart bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white px-4 py-2 rounded-full transition" data-id="1" data-name="Massaging Wax Oil Candle" data-price="250">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://github.com/greymcai/magicalcrafts/blob/main/54224439-cdc2-4e04-be28-12f82e83b651.jpg?raw=true" alt="Luxury Shower Gel" class="w-full h-64 object-cover" loading="lazy">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 font-playfair">Luxury Shower Gel</h3>
+                        <p class="text-gray-600 mb-4">A rich, foaming shower gel that cleanses while nourishing your skin.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-rose-gold font-bold">R 180</span>
+                            <button class="add-to-cart bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white px-4 py-2 rounded-full transition" data-id="2" data-name="Luxury Shower Gel" data-price="180">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://github.com/greymcai/magicalcrafts/blob/main/58950d65-899c-4926-892c-2fa085ff7c61.jpg?raw=true" alt="Nourishing Body Lotion" class="w-full h-64 object-cover" loading="lazy">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 font-playfair">Nourishing Body Lotion</h3>
+                        <p class="text-gray-600 mb-4">Deeply hydrating lotion that leaves skin soft and delicately fragranced.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-rose-gold font-bold">R 220</span>
+                            <button class="add-to-cart bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white px-4 py-2 rounded-full transition" data-id="3" data-name="Nourishing Body Lotion" data-price="220">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <img src="https://github.com/greymcai/magicalcrafts/blob/main/c41870bd-1244-4abc-8b92-48258044e7b5.jpg?raw=true" alt="Refreshing Room Mist" class="w-full h-64 object-cover" loading="lazy">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 font-playfair">Refreshing Room Mist</h3>
+                        <p class="text-gray-600 mb-4">A light, uplifting mist to refresh your living spaces with natural fragrances.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-rose-gold font-bold">R 150</span>
+                            <button class="add-to-cart bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white px-4 py-2 rounded-full transition" data-id="4" data-name="Refreshing Room Mist" data-price="150">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-blush-pink">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8" data-aos="fade-right">
+                    <img src="https://github.com/greymcai/magicalcrafts/blob/main/7882945a-6984-444a-b155-c38b13ef26ea.jpg?raw=true" alt="Handcrafting process at Magical Crafts" class="rounded-lg shadow-lg w-full" loading="lazy">
+                </div>
+                <div class="md:w-1/2" data-aos="fade-left">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 font-playfair">About Magical Crafts</h2>
+                    <p class="mb-4">At Magical Crafts, we believe in the power of small-batch, handcrafted luxury. Each of our products is carefully formulated and crafted with the finest natural ingredients to create sensory experiences that elevate everyday moments.</p>
+                    <p class="mb-4">Our founder, a master perfumer with over 15 years of experience, personally oversees every creation, ensuring that each product meets our exacting standards for quality, sustainability, and sensory delight.</p>
+                    <p>From our signature candles to our nourishing body care range, every Magical Crafts product is designed to bring a touch of luxury to your daily rituals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 font-playfair" data-aos="fade-up">What Our Customers Say</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-blush-pink p-6 rounded-lg shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&q=80" alt="Sarah M." class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah M.</h4>
+                            <div class="flex text-rose-gold">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p>"The Massaging Wax Oil Candle is divine! It creates such a luxurious atmosphere and the oil leaves my skin so soft. Worth every penny!"</p>
+                </div>
+                
+                <!-- Review 2 -->
+                <div class="bg-blush-pink p-6 rounded-lg shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&q=80" alt="Thando K." class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Thando K.</h4>
+                            <div class="flex text-rose-gold">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p>"I've tried many luxury brands, but Magical Crafts stands out. The scents are unique and sophisticated, not overpowering. The packaging is beautiful too!"</p>
+                </div>
+                
+                <!-- Review 3 -->
+                <div class="bg-blush-pink p-6 rounded-lg shadow-sm" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-4">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&h=100&q=80" alt="James L." class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">James L.</h4>
+                            <div class="flex text-rose-gold">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p>"Bought the gift set for my wife's birthday. She absolutely loved it! The customer service was excellent, and the products arrived beautifully packaged."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-deep-brown text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 font-playfair" data-aos="fade-up">Get In Touch</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2" data-aos="fade-right">
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold mb-4 font-playfair">Visit Us</h3>
+                        <p>18 Exhibition Road, Whiteridge<br>Johannesburg, 1709</p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-xl font-bold mb-4 font-playfair">Contact Details</h3>
+                        <p class="mb-2"><i data-feather="phone" class="inline mr-2"></i> +27 60 506 2333</p>
+                        <p><i data-feather="mail" class="inline mr-2"></i> vvwehmeyer@icloud.com</p>
+                    </div>
+                    
+                    <div class="h-64 bg-gray-200 rounded-lg overflow-hidden">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3579.9876543210987!2d28.01234567891234!3d-26.123456789101112!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDA3JzI0LjQiTiAyOMKwMDAnNDQuMyJF!5e0!3m2!1sen!2sza!4v1234567890123!5m2!1sen!2sza" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2" data-aos="fade-left">
+                    <h3 class="text-xl font-bold mb-4 font-playfair">Send Us a Message</h3>
+                    <form action="https://formsubmit.co/hello@greymc.co.za" method="POST" class="space-y-4">
+                        <input type="hidden" name="_subject" value="New message from Magical Crafts website">
+                        <input type="hidden" name="_next" value="https://magicalcrafts.com/thank-you.html">
+                        
+                        <div>
+                            <label for="name" class="block mb-1">Name</label>
+                            <input type="text" id="name" name="name" required class="w-full px-4 py-2 rounded bg-white text-deep-brown border border-gray-300 focus:border-rose-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block mb-1">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 rounded bg-white text-deep-brown border border-gray-300 focus:border-rose-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block mb-1">Phone</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 rounded bg-white text-deep-brown border border-gray-300 focus:border-rose-gold">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block mb-1">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 rounded bg-white text-deep-brown border border-gray-300 focus:border-rose-gold"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="bg-rose-gold hover:bg-white text-white hover:text-deep-brown px-6 py-3 rounded-full transition duration-300 font-medium">Send Message</button>
+                    </form>
+                    
+                    <!-- Thank You Message (hidden initially) -->
+                    <div id="thank-you-message" class="hidden bg-white rounded-lg p-6 text-center mt-6 text-black">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <h3 class="text-2xl font-bold mb-2 font-playfair">Thank You!</h3>
+                        <p class="mb-4">Your message has been sent successfully.</p>
+                        <p>We'll get back to you soon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blush-pink py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between mb-8">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4 font-playfair">Magical Crafts</h3>
+                    <p class="max-w-xs">Handcrafted luxury scents for every mood. Small-batch, artisanal products made with care.</p>
+                </div>
+                
+                <div class="mb-8 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4 font-playfair">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-rose-gold transition">Home</a></li>
+                        <li><a href="#products" class="hover:text-rose-gold transition">Shop</a></li>
+                        <li><a href="#about" class="hover:text-rose-gold transition">About</a></li>
+                        <li><a href="#reviews" class="hover:text-rose-gold transition">Reviews</a></li>
+                        <li><a href="#contact" class="hover:text-rose-gold transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4 font-playfair">Connect With Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-deep-brown hover:text-rose-gold transition"><i data-feather="facebook"></i></a>
+                        <a href="#" class="text-deep-brown hover:text-rose-gold transition"><i data-feather="instagram"></i></a>
+                        <a href="#" class="text-deep-brown hover:text-rose-gold transition"><i data-feather="twitter"></i></a>
+                        <a href="#" class="text-deep-brown hover:text-rose-gold transition"><i data-feather="pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-rose-gold text-center">
+                <p>&copy; <span id="year"></span> Magical Crafts. All rights reserved. <br>Developed by <a href="https://www.greymc.co.za" target="_blank" class="text-rose-gold hover:underline">www.greymc.co.za</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Panel -->
+    <div id="cart-panel" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full cart-panel z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold font-playfair">Your Cart</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-rose-gold">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here dynamically -->
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4 mb-6">
+                <div class="flex justify-between mb-2">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">R 0</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span>Shipping</span>
+                    <span>Calculated at checkout</span>
+                </div>
+                <div class="flex justify-between font-bold text-lg">
+                    <span>Total</span>
+                    <span id="cart-total">R 0</span>
+                </div>
+            </div>
+            
+            <a href="checkout.html" id="checkout-button" class="w-full block text-center bg-rose-gold hover:bg-deep-brown text-white py-3 rounded-full transition duration-300 font-medium">Proceed to Checkout</a>
+        </div>
+    </div>
+
+
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Magical Crafts",
+        "image": "https://images.unsplash.com/photo-1601924994980-5b7e67e2c3e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&h=630&q=80",
+        "description": "Handcrafted luxury scents including candles, shower gels, soaps, and more.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "18 Exhibition Road",
+            "addressLocality": "Whiteridge",
+            "addressRegion": "Johannesburg",
+            "postalCode": "1709",
+            "addressCountry": "ZA"
+        },
+        "telephone": "+27605062333",
+        "email": "vvwehmeyer@icloud.com",
+        "priceRange": "$$",
+        "sameAs": [
+            "https://www.facebook.com/magicalcrafts",
+            "https://www.instagram.com/magicalcrafts"
+        ]
+    }
+    </script>
+
+    <script>
+        // Handle contact form submission
+        const contactForm = document.querySelector('#contact form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => {
+                if (response.ok) {
+                    this.reset();
+                    document.getElementById('thank-you-message').classList.remove('hidden');
+                    document.getElementById('thank-you-message').scrollIntoView({ behavior: 'smooth' });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error sending your message. Please try again.');
+            });
+        });
+
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuButton.querySelector('i');
+            if (mobileMenu.classList.contains('hidden')) {
+                feather.replace();
+            } else {
+                icon.setAttribute('data-feather', 'x');
+                feather.replace();
+            }
+        });
+        
+        // Cart functionality
+        const cartButton = document.getElementById('cart-button');
+        const cartPanel = document.getElementById('cart-panel');
+        const closeCart = document.getElementById('close-cart');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCount = document.getElementById('cart-count');
+        const checkoutButton = document.getElementById('checkout-button');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const closeCheckout = document.getElementById('close-checkout');
+        const checkoutForm = document.getElementById('checkout-form');
+        const orderDetailsInput = document.getElementById('order-details-input');
+        
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Add to cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                showCartPanel();
+                
+                // Add animation to button
+                button.textContent = 'Added!';
+                button.classList.add('bg-green-500');
+                setTimeout(() => {
+                    button.textContent = 'Add to Cart';
+                    button.classList.remove('bg-green-500');
+                }, 1000);
+            });
+        });
+        
+        // Update cart UI
+        function updateCart() {
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update cart items
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-gray-500">Your cart is empty</p>';
+                cartSubtotal.textContent = 'R 0';
+                cartTotal.textContent = 'R 0';
+                checkoutButton.disabled = true;
+                return;
+            }
+            
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'flex justify-between items-center border-b border-gray-100 pb-4';
+                cartItemElement.innerHTML = `
+                    <div>
+                        <h4 class="font-medium">${item.name}</h4>
+                        <p class="text-sm text-gray-500">R ${item.price.toFixed(2)}</p>
+                    </div>
+                    <div class="flex items-center">
+                        <button class="decrease-quantity text-gray-500 hover:text-rose-gold px-2" data-id="${item.id}">
+                            <i data-feather="minus" class="w-4 h-4"></i>
+                        </button>
+                        <span class="mx-2">${item.quantity}</span>
+                        <button class="increase-quantity text-gray-500 hover:text-rose-gold px-2" data-id="${item.id}">
+                            <i data-feather="plus" class="w-4 h-4"></i>
+                        </button>
+                        <button class="remove-item text-rose-gold hover:text-deep-brown ml-4" data-id="${item.id}">
+                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+            
+            cartSubtotal.textContent = `R ${subtotal.toFixed(2)}`;
+            cartTotal.textContent = `R ${subtotal.toFixed(2)}`;
+            
+            // Update feather icons in new elements
+            feather.replace();
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    if (item) {
+                        item.quantity += 1;
+                        updateCart();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    if (item) {
+                        if (item.quantity > 1) {
+                            item.quantity -= 1;
+                        } else {
+                            cart = cart.filter(item => item.id !== id);
+                        }
+                        updateCart();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    cart = cart.filter(item => item.id !== id);
+                    updateCart();
+                });
+            });
+        }
+        
+        // Show/hide cart panel
+        function showCartPanel() {
+            cartPanel.classList.remove('translate-x-full');
+            cartPanel.classList.add('translate-x-0');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideCartPanel() {
+            cartPanel.classList.remove('translate-x-0');
+            cartPanel.classList.add('translate-x-full');
+            document.body.style.overflow = 'auto';
+        }
+        
+        cartButton.addEventListener('click', showCartPanel);
+        closeCart.addEventListener('click', hideCartPanel);
+        
+        // Update checkout button state
+        function updateCheckoutButton() {
+            const checkoutButton = document.getElementById('checkout-button');
+            if (cart.length === 0) {
+                checkoutButton.disabled = true;
+            } else {
+                checkoutButton.disabled = false;
+                checkoutButton.addEventListener('click', () => {
+                    window.location.href = '/checkout.html';
+                });
+            }
+        }
+
+        // Prepare checkout data before redirecting
+        function prepareCheckout() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            localStorage.setItem('checkoutData', JSON.stringify(cart));
+        }
+        
+        // Call this in updateCart()
+        updateCheckoutButton();
+        
+        // Initialize cart on page load
+        updateCart();
+    </script>
+</body>
+</html>
