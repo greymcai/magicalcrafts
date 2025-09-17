@@ -80,19 +80,9 @@
                 </p>
                 
                 <!-- Order Summary -->
-                <div class="bg-blush-pink rounded-lg p-6 mb-8 text-left">
-                    <h3 class="text-xl font-bold mb-4 font-playfair text-deep-brown">Order Details</h3>
-                    <div id="order-summary">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
-                </div>
-                
-                <!-- Payment Instructions -->
                 <div class="bg-white border border-rose-gold rounded-lg p-6 mb-8 text-left">
-                    <h3 class="text-xl font-bold mb-4 font-playfair text-deep-brown">Payment Instructions</h3>
-                    <div id="payment-instructions">
-                        <!-- Will be populated by JavaScript -->
-                    </div>
+                    <h3 class="text-xl font-bold mb-4 font-playfair text-deep-brown">Order Summary</h3>
+                    <div id="order-summary"><p>Order details has been sent. Please check your email for confirmation.</p></div>
                 </div>
                 
                 <!-- Buttons -->
@@ -100,9 +90,7 @@
                     <a href="index.html" class="bg-rose-gold hover:bg-deep-brown text-white px-8 py-3 rounded-full transition duration-300 font-medium">
                         Continue Shopping
                     </a>
-                    <button onclick="emailPaymentInstructions()" class="bg-white hover:bg-blush-pink text-rose-gold border border-rose-gold px-8 py-3 rounded-full transition duration-300 font-medium">
-                        <i data-feather="mail" class="inline mr-2"></i> Email Receipt
-                    </button>
+                   
                 </div>
             </div>
         </div>
@@ -136,91 +124,10 @@
             }
         }
         
-        // Load order details from URL parameters
-        function loadOrderDetails() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderSummary = document.getElementById('order-summary');
-            const paymentInstructions = document.getElementById('payment-instructions');
-            
-            if (urlParams.has('order_reference')) {
-                const reference = urlParams.get('order_reference');
-                const email = urlParams.get('customer_email') || 'your email';
-                
-                orderSummary.innerHTML = `
-                    <p class="mb-2"><span class="font-medium">Order Number:</span> <span class="font-mono">${reference}</span></p>
-                    <p class="mb-2"><span class="font-medium">Email:</span> ${email}</p>
-                    <p class="mb-4"><span class="font-medium">Date:</span> ${new Date().toLocaleDateString()}</p>
-                    <p class="text-sm text-deep-brown/80">A detailed receipt has been sent to your email.</p>
-                `;
-                
-                paymentInstructions.innerHTML = `
-                    <p class="mb-2"><span class="font-medium">Bank:</span> [Replace with Bank Name]</p>
-                    <p class="mb-2"><span class="font-medium">Account Name:</span> Magical Crafts</p>
-                    <p class="mb-2"><span class="font-medium">Account Number:</span> [Replace with Account Number]</p>
-                    <p class="mb-2"><span class="font-medium">Reference:</span> <span class="font-mono">${reference}</span></p>
-                    <p class="mt-4 text-sm text-deep-brown/80">Please complete payment within 24 hours to secure your order.</p>
-                `;
-            } else {
-                orderSummary.innerHTML = '<p>Order details not available. Please check your email for confirmation.</p>';
-                paymentInstructions.innerHTML = '<p>Payment instructions not available. Please check your email.</p>';
-            }
-        }
         
-        // Email payment instructions
-        function emailPaymentInstructions() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const reference = urlParams.get('order_reference') || 'MC-' + new Date().getTime();
-            const email = urlParams.get('customer_email') || '';
-            const name = urlParams.get('customer_name') || 'Valued Customer';
-            
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = 'https://formsubmit.co/hello@greymc.co.za';
-            
-            const addHidden = (name, value) => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = name;
-                input.value = value;
-                form.appendChild(input);
-            };
-            
-            addHidden('_subject', `Order Receipt - ${reference}`);
-            addHidden('_cc', email);
-            addHidden('_replyto', email);
-            addHidden('customer_name', name);
-            addHidden('customer_email', email);
-            addHidden('message', `
-Thank you for your order with Magical Crafts!
-
-Order Number: ${reference}
-Date: ${new Date().toLocaleDateString()}
-
-We're preparing your order with care and will notify you once it's on its way.
-
-Payment Instructions:
-Bank: [Replace with Bank Name]
-Account Name: Magical Crafts
-Account Number: [Replace with Account Number]
-Reference: ${reference}
-
-Please complete payment within 24 hours to secure your order.
-
-If you have any questions, please reply to this email.
-
-Best regards,
-The Magical Crafts Team
-            `);
-            
-            document.body.appendChild(form);
-            form.submit();
-            
-            alert('Receipt has been sent to your email!');
-        }
         
         // Initialize on page load
         createConfetti();
-        loadOrderDetails();
     </script>
 </body>
 </html>
