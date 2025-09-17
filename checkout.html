@@ -48,6 +48,7 @@
   <script>
     feather.replace();
     document.getElementById('year').textContent = new Date().getFullYear();
+
     function generatePaymentReference() {
       const now = new Date();
       const year = now.getFullYear();
@@ -59,10 +60,12 @@
       const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
       return `MC-${year}${month}${day}-${hours}${minutes}${seconds}-${random}`;
     }
+
     function loadCheckout() {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const checkoutContent = document.getElementById('checkout-content');
       const paymentReference = generatePaymentReference();
+
       if (cart.length === 0) {
         checkoutContent.innerHTML = `
           <div class="bg-white rounded-lg shadow-lg p-8 text-center max-w-md mx-auto">
@@ -77,10 +80,12 @@
         feather.replace();
         return;
       }
+
       let subtotal = 0;
       cart.forEach(item => { subtotal += item.price * item.quantity; });
       const shipping = 50;
       const total = subtotal + shipping;
+
       const fullOrderDetails = JSON.stringify({
         items: cart,
         subtotal: subtotal,
@@ -88,6 +93,7 @@
         total: total,
         reference: paymentReference
       }, null, 2);
+
       checkoutContent.innerHTML = `
         <div class="flex flex-col lg:flex-row gap-8 mb-8">
           <div class="lg:w-2/5">
@@ -109,19 +115,16 @@
               </div>
             </div>
           </div>
+
           <div class="lg:w-3/5">
             <div class="bg-white rounded-lg shadow-lg p-6">
               <h2 class="text-xl font-bold mb-6 font-playfair">Shipping Details</h2>
-              <form id="checkout-form" action="https://formsubmit.co/hello@greymc.co.za" method="POST" class="space-y-4">
+              <form id="checkout-form" class="space-y-4">
                 <input type="hidden" name="_subject" value="New Order - ${paymentReference}">
                 <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="thank-you.html">
                 <input type="hidden" name="_cc" value="hello@greymc.co.za">
-                <input type="hidden" name="_replyto" id="reply-to-email">
-                <input type="hidden" name="order_reference" value="${paymentReference}">
-                <textarea name="order_details" class="hidden">${fullOrderDetails}</textarea>
-                <input type="hidden" name="customer_email" id="customer-email-input">
-                <input type="hidden" name="payment_instructions" id="payment-instructions">
+                <textarea name="order_details" class="hidden" id="order-details">${fullOrderDetails}</textarea>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label for="full-name" class="block mb-1">Full Name *</label>
@@ -132,6 +135,7 @@
                     <input type="email" id="email" name="email" required class="w-full px-4 py-2 rounded bg-white text-deep-brown border border-gray-300 focus:border-rose-gold">
                   </div>
                 </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label for="phone" class="block mb-1">Phone *</label>
@@ -142,10 +146,12 @@
                     <textarea id="address" name="address" rows="1" required class="w-full px-4 py-2 rounded bg-white text-deep-brown border border-gray-300 focus:border-rose-gold"></textarea>
                   </div>
                 </div>
+
                 <div>
                   <label for="order-notes" class="block mb-1">Order Notes</label>
                   <textarea id="order-notes" name="order_notes" rows="3" class="w-full px-4 py-2 rounded bg-white text-deep-brown border border-gray-300 focus:border-rose-gold" placeholder="Any special instructions or delivery notes..."></textarea>
                 </div>
+
                 <div class="pt-6">
                   <h3 class="text-lg font-bold mb-4 font-playfair">Payment Information</h3>
                   <div class="bg-blush-pink p-4 rounded-lg">
@@ -161,149 +167,45 @@
                     <p class="text-sm mt-3 text-deep-brown/80">Please use the exact reference number above when making your payment.</p>
                   </div>
                 </div>
+
                 <div class="pt-6 space-y-4">
-                  <button type="button" onclick="downloadPaymentInstructions()" class="w-full bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white py-3 rounded-full transition duration-300 font-medium border border-rose-gold">Download Payment Instructions</button>
                   <button type="submit" class="w-full bg-rose-gold hover:bg-deep-brown text-white py-3 rounded-full transition duration-300 font-medium">Confirm Order</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-        <div id="order-confirmation" class="hidden bg-white rounded-lg shadow-lg p-8 text-center max-w-2xl mx-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500 mx-auto mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-          <h2 class="text-2xl font-bold mb-4 font-playfair">Order Confirmed!</h2>
-          <p class="mb-6">Thank you for your order. We've sent a confirmation email with your order details.</p>
-          <a href="index.html" class="block w-full bg-rose-gold hover:bg-deep-brown text-white py-3 rounded-full transition duration-300 font-medium text-center">Continue Shopping</a>
-        </div>
       `;
+
       feather.replace();
-      const form = document.getElementById('checkout-form');
-      form.addEventListener('submit', function(e) {
+
+      // JS submit handler (fetch to FormSubmit with redirect)
+      document.getElementById('checkout-form').addEventListener('submit', function (e) {
         e.preventDefault();
-        const customerEmail = document.getElementById('email').value;
-        const customerName = document.getElementById('full-name').value;
-        document.getElementById('reply-to-email').value = customerEmail;
-        document.getElementById('customer-email-input').value = customerEmail;
-        document.getElementById('payment-instructions').value = generatePaymentInstructionsText();
-        // email via FormSubmit with captcha disabled
-        sendConfirmationEmail(customerEmail, customerName, paymentReference, cart);
-        localStorage.removeItem('cart');
-        // Show confirmation block, hide form
-        document.getElementById('checkout-form').classList.add('hidden');
-        document.getElementById('order-confirmation').classList.remove('hidden');
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // Send to FormSubmit invisibly
+        fetch('https://formsubmit.co/hello@greymc.co.za', {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => {
+          if (response.ok) {
+            // Clear cart and redirect to thank-you page
+            localStorage.removeItem('cart');
+            window.location.href = 'thank-you.html';
+          } else {
+            alert('Error sending order. Please try again.');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('Error sending order. Please try again.');
+        });
       });
     }
-    function sendConfirmationEmail(email, name, reference, cart) {
-      let subtotal = 0;
-      cart.forEach(item => subtotal += item.price * item.quantity);
-      const shipping = 50;
-      const total = subtotal + shipping;
-      const emailContent = `
-Payment Instructions - Magical Crafts
-Dear ${name},
-Thank you for your order with Magical Crafts! Here are your payment instructions:
-ORDER SUMMARY:
-${cart.map(item => `${item.name} × ${item.quantity} - R ${(item.price * item.quantity).toFixed(2)}`).join('\n')}
-Subtotal: R ${subtotal.toFixed(2)}
-Shipping: R ${shipping.toFixed(2)}
-Total: R ${total.toFixed(2)}
-BANK TRANSFER DETAILS:
-Bank: [Replace with Bank Name]
-Account Name: Magical Crafts
-Account Number: [Replace with Account Number]
-Branch Code: [Replace with Branch Code]
-SWIFT Code: [Replace with SWIFT Code]
-Reference: ${reference}
-Please use the exact reference number above when making your payment.
-Payment must be completed within 24 hours to secure your order.
-Thank you for choosing Magical Crafts!
-Best regards,
-The Magical Crafts Team
-      `;
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = 'https://formsubmit.co/hello@greymc.co.za';
-      const addHidden = (name, value) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = name;
-        input.value = value;
-        form.appendChild(input);
-      };
-      addHidden('_subject', `Order Confirmation - ${reference}`);
-      addHidden('_cc', email);
-      addHidden('_replyto', email);
-      addHidden('_captcha', 'false');
-      addHidden('customer_name', name);
-      addHidden('customer_email', email);
-      addHidden('message', emailContent);
-      document.body.appendChild(form);
-      form.submit();
-    }
-    function generatePaymentInstructionsText() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      if (cart.length === 0) return '';
-      let subtotal = 0;
-      cart.forEach(item => subtotal += item.price * item.quantity);
-      const shipping = 50;
-      const total = subtotal + shipping;
-      const paymentReference = generatePaymentReference();
-      return `
-ORDER SUMMARY:
-${cart.map(item => `${item.name} × ${item.quantity} - R ${(item.price * item.quantity).toFixed(2)}`).join('\n')}
-Subtotal: R ${subtotal.toFixed(2)}
-Shipping: R ${shipping.toFixed(2)}
-Total: R ${total.toFixed(2)}
-BANK TRANSFER DETAILS:
-Bank: [Replace with Bank Name]
-Account Name: Magical Crafts
-Account Number: [Replace with Account Number]
-Branch Code: [Replace with Branch Code]
-SWIFT Code: [Replace with SWIFT Code]
-Reference: ${paymentReference}
-Please use the exact reference number above when making your payment.
-Payment must be completed within 24 hours to secure your order.
-      `;
-    }
-    function downloadPaymentInstructions() {
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      if (cart.length === 0) return;
-      let subtotal = 0;
-      cart.forEach(item => subtotal += item.price * item.quantity);
-      const shipping = 50;
-      const total = subtotal + shipping;
-      const paymentReference = generatePaymentReference();
-      const htmlContent = `
-<!DOCTYPE html>
-<html>
-<head>
-<title>Payment Instructions - Magical Crafts</title>
-</head>
-<body>
-<h1>Payment Instructions</h1>
-${cart.map(item => `${item.name} × ${item.quantity} - R ${(item.price * item.quantity).toFixed(2)}`).join('<br>')}
-<br>Subtotal: R ${subtotal.toFixed(2)}
-<br>Shipping: R ${shipping.toFixed(2)}
-<br>Total: R ${total.toFixed(2)}
-<br><br>Bank Transfer Details:
-<br>Bank: [Replace with Bank Name]
-<br>Account Name: Magical Crafts
-<br>Account Number: [Replace with Account Number]
-<br>Branch Code: [Replace with Branch Code]
-<br>SWIFT Code: [Replace with SWIFT Code]
-<br>Reference: ${paymentReference}
-</body>
-</html>`;
-      const blob = new Blob([htmlContent], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `payment-instructions-${paymentReference}.html`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+
     loadCheckout();
   </script>
 </body>
