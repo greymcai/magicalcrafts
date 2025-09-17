@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Cart | Magical Crafts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose-gold': '#B76E79',
+                        'blush-pink': '#F7D7D7',
+                        'deep-brown': '#5A3B3B',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        input:focus {
+            outline: none;
+            border-color: #B76E79;
+        }
+    </style>
+</head>
+<body class="bg-blush-pink text-deep-brown min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-8">
+            <a href="index.html" class="text-2xl font-bold text-rose-gold font-playfair block text-center mb-4">Magical Crafts</a>
+            <h1 class="text-3xl md:text-4xl font-bold text-center font-playfair">Edit Your Cart</h1>
+        </header>
+
+        <div id="cart-content" class="max-w-4xl mx-auto">
+            <!-- Cart items will be populated here -->
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 pt-8 border-t border-rose-gold text-center">
+            <p>&copy; <span id="year"></span> Magical Crafts. All rights reserved. <br>Developed by <a href="https://www.greymc.co.za" target="_blank" class="text-rose-gold hover:underline">www.greymc.co.za</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Function to get product image based on ID
+        function getProductImage(id) {
+            const images = {
+                '1': 'https://github.com/greymcai/magicalcrafts/blob/main/36c10aa7-5b2c-4535-9ce1-43d4f32d3947.jpg?raw=true',
+                '2': 'https://github.com/greymcai/magicalcrafts/blob/main/54224439-cdc2-4e04-be28-12f82e83b651.jpg?raw=true',
+                '3': 'https://github.com/greymcai/magicalcrafts/blob/main/58950d65-899c-4926-892c-2fa085ff7c61.jpg?raw=true',
+                '4': 'https://github.com/greymcai/magicalcrafts/blob/main/c41870bd-1244-4abc-8b92-48258044e7b5.jpg?raw=true'
+            };
+            return images[id] || 'http://static.photos/luxury/120x120/1';
+        }
+        
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function loadCart() {
+            const cartContent = document.getElementById('cart-content');
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                        <i data-feather="shopping-cart" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                        <h2 class="text-2xl font-bold mb-4 font-playfair">Your cart is empty</h2>
+                        <p class="mb-6 text-gray-600">Add some magical products to your cart before proceeding.</p>
+                        <a href="index.html#products" class="bg-rose-gold hover:bg-deep-brown text-white px-6 py-3 rounded-full transition duration-300 font-medium">
+                            Continue Shopping
+                        </a>
+                    </div>
+                `;
+                feather.replace();
+                return;
+            }
+            
+            let subtotal = 0;
+            const cartItemsHTML = cart.map((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                return `
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-4" data-index="${index}">
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
+                            <img src="${getProductImage(item.id)}" alt="${item.name}" class="w-20 h-20 object-cover rounded-lg">
+                            
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold font-playfair">${item.name}</h3>
+                                <p class="text-rose-gold font-semibold">R ${item.price.toFixed(2)}</p>
+                            </div>
+                            
+                            <div class="flex items-center gap-3">
+                                <button onclick="updateQuantity(${index}, -1)" class="w-8 h-8 rounded-full bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white transition duration-200 flex items-center justify-center">
+                                    <i data-feather="minus" class="w-4 h-4"></i>
+                                </button>
+                                
+                                <input type="number" 
+                                       value="${item.quantity}" 
+                                       min="1" 
+                                       max="99" 
+                                       onchange="updateQuantityInput(${index}, this.value)"
+                                       class="w-16 text-center border border-gray-300 rounded py-1 px-2">
+                                
+                                <button onclick="updateQuantity(${index}, 1)" class="w-8 h-8 rounded-full bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white transition duration-200 flex items-center justify-center">
+                                    <i data-feather="plus" class="w-4 h-4"></i>
+                                </button>
+                                
+                                <button onclick="removeItem(${index})" class="w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition duration-200 flex items-center justify-center ml-2">
+                                    <i data-feather="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="text-right">
+                                <p class="text-lg font-semibold">R ${itemTotal.toFixed(2)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            cartContent.innerHTML = `
+                ${cartItemsHTML}
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 mt-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold font-playfair">Order Summary</h3>
+                    </div>
+                    
+                    <div class="space-y-2 mb-4">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span>R ${subtotal.toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Shipping</span>
+                            <span>R 50.00</span>
+                        </div>
+                        <div class="border-t border-gray-200 pt-2">
+                            <div class="flex justify-between font-bold text-lg">
+                                <span>Total</span>
+                                <span>R ${(subtotal + 50).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="index.html#products" class="flex-1 bg-blush-pink hover:bg-rose-gold text-deep-brown hover:text-white py-3 rounded-full transition duration-300 font-medium text-center border border-rose-gold">
+                            Continue Shopping
+                        </a>
+                        <a href="checkout.html" class="flex-1 bg-rose-gold hover:bg-deep-brown text-white py-3 rounded-full transition duration-300 font-medium text-center">
+                            Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            feather.replace();
+        }
+        
+        function updateQuantity(index, change) {
+            if (cart[index]) {
+                cart[index].quantity += change;
+                
+                if (cart[index].quantity < 1) {
+                    cart[index].quantity = 1;
+                }
+                
+                if (cart[index].quantity > 99) {
+                    cart[index].quantity = 99;
+                }
+                
+                saveCart();
+                loadCart();
+            }
+        }
+        
+        function updateQuantityInput(index, value) {
+            const quantity = parseInt(value);
+            if (cart[index] && !isNaN(quantity) && quantity >= 1 && quantity <= 99) {
+                cart[index].quantity = quantity;
+                saveCart();
+                loadCart();
+            }
+        }
+        
+        function removeItem(index) {
+            if (confirm('Are you sure you want to remove this item from your cart?')) {
+                cart.splice(index, 1);
+                saveCart();
+                loadCart();
+            }
+        }
+        
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        // Initialize on page load
+        loadCart();
+    </script>
+</body>
+</html>
