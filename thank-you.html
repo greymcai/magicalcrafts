@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You | Magical Crafts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rose-gold': '#B76E79',
+                        'blush-pink': '#F7D7D7',
+                        'deep-brown': '#5A3B3B',
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F7D7D7;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #B76E79;
+            opacity: 0.7;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Confetti Animation -->
+    <div id="confetti-container"></div>
+
+    <!-- Header -->
+    <header class="py-8 text-center">
+        <a href="index.html" class="text-3xl font-bold text-rose-gold font-playfair">Magical Crafts</a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center px-4">
+        <div class="bg-white rounded-xl shadow-2xl p-8 md:p-12 max-w-2xl w-full text-center relative overflow-hidden">
+            <!-- Decorative elements -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-blush-pink opacity-20"></div>
+            <div class="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-rose-gold opacity-10"></div>
+            
+            <div class="relative z-10">
+                <!-- Checkmark icon -->
+                <div class="w-24 h-24 bg-rose-gold rounded-full flex items-center justify-center mx-auto mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                
+                <h1 class="text-3xl md:text-4xl font-bold mb-6 font-playfair text-deep-brown">Thank You For Your Order!</h1>
+                
+                <p class="text-lg mb-8 max-w-lg mx-auto">
+                    Your order has been received and we're preparing it with care. You'll receive a confirmation email shortly with all the details.
+                </p>
+                
+                <!-- Order Summary -->
+                <div class="bg-blush-pink rounded-lg p-6 mb-8 text-left">
+                    <h3 class="text-xl font-bold mb-4 font-playfair text-deep-brown">Order Details</h3>
+                    <div id="order-summary">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Payment Instructions -->
+                <div class="bg-white border border-rose-gold rounded-lg p-6 mb-8 text-left">
+                    <h3 class="text-xl font-bold mb-4 font-playfair text-deep-brown">Payment Instructions</h3>
+                    <div id="payment-instructions">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="index.html" class="bg-rose-gold hover:bg-deep-brown text-white px-8 py-3 rounded-full transition duration-300 font-medium">
+                        Continue Shopping
+                    </a>
+                    <button onclick="emailPaymentInstructions()" class="bg-white hover:bg-blush-pink text-rose-gold border border-rose-gold px-8 py-3 rounded-full transition duration-300 font-medium">
+                        <i data-feather="mail" class="inline mr-2"></i> Email Receipt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-deep-brown/70">
+        <p>&copy; <span id="year"></span> Magical Crafts. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Initialize Feather Icons
+        feather.replace();
+        
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Create confetti effect
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.backgroundColor = `hsl(${Math.random() * 60 + 330}, 50%, 60%)`;
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(confetti);
+            }
+        }
+        
+        // Load order details from URL parameters
+        function loadOrderDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderSummary = document.getElementById('order-summary');
+            const paymentInstructions = document.getElementById('payment-instructions');
+            
+            if (urlParams.has('order_reference')) {
+                const reference = urlParams.get('order_reference');
+                const email = urlParams.get('customer_email') || 'your email';
+                
+                orderSummary.innerHTML = `
+                    <p class="mb-2"><span class="font-medium">Order Number:</span> <span class="font-mono">${reference}</span></p>
+                    <p class="mb-2"><span class="font-medium">Email:</span> ${email}</p>
+                    <p class="mb-4"><span class="font-medium">Date:</span> ${new Date().toLocaleDateString()}</p>
+                    <p class="text-sm text-deep-brown/80">A detailed receipt has been sent to your email.</p>
+                `;
+                
+                paymentInstructions.innerHTML = `
+                    <p class="mb-2"><span class="font-medium">Bank:</span> [Replace with Bank Name]</p>
+                    <p class="mb-2"><span class="font-medium">Account Name:</span> Magical Crafts</p>
+                    <p class="mb-2"><span class="font-medium">Account Number:</span> [Replace with Account Number]</p>
+                    <p class="mb-2"><span class="font-medium">Reference:</span> <span class="font-mono">${reference}</span></p>
+                    <p class="mt-4 text-sm text-deep-brown/80">Please complete payment within 24 hours to secure your order.</p>
+                `;
+            } else {
+                orderSummary.innerHTML = '<p>Order details not available. Please check your email for confirmation.</p>';
+                paymentInstructions.innerHTML = '<p>Payment instructions not available. Please check your email.</p>';
+            }
+        }
+        
+        // Email payment instructions
+        function emailPaymentInstructions() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const reference = urlParams.get('order_reference') || 'MC-' + new Date().getTime();
+            const email = urlParams.get('customer_email') || '';
+            const name = urlParams.get('customer_name') || 'Valued Customer';
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://formsubmit.co/hello@greymc.co.za';
+            
+            const addHidden = (name, value) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            };
+            
+            addHidden('_subject', `Order Receipt - ${reference}`);
+            addHidden('_cc', email);
+            addHidden('_replyto', email);
+            addHidden('customer_name', name);
+            addHidden('customer_email', email);
+            addHidden('message', `
+Thank you for your order with Magical Crafts!
+
+Order Number: ${reference}
+Date: ${new Date().toLocaleDateString()}
+
+We're preparing your order with care and will notify you once it's on its way.
+
+Payment Instructions:
+Bank: [Replace with Bank Name]
+Account Name: Magical Crafts
+Account Number: [Replace with Account Number]
+Reference: ${reference}
+
+Please complete payment within 24 hours to secure your order.
+
+If you have any questions, please reply to this email.
+
+Best regards,
+The Magical Crafts Team
+            `);
+            
+            document.body.appendChild(form);
+            form.submit();
+            
+            alert('Receipt has been sent to your email!');
+        }
+        
+        // Initialize on page load
+        createConfetti();
+        loadOrderDetails();
+    </script>
+</body>
+</html>
